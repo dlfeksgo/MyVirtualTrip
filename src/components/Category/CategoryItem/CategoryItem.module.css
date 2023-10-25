@@ -1,0 +1,17 @@
+.wrapper {
+	overflow-y: auto;
+	margin-bottom: 40px;
+	height: 442px;
+}
+
+.item {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	background: #f9f9f9;
+	border-radius: 8px;
+	font-size: 20px;
+	color: #252525;
+	padding: 2px 16px;
+	margin-bottom: 12px;
+}

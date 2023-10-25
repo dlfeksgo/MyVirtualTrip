@@ -1,9 +1,9 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import MyButton from '../UI/MyButton/MyButton';
 import styles from './TripInfo.module.css';
 import { AiOutlineEdit } from 'react-icons/ai';
 import classnames from 'classnames/bind';
-import { useLocation, useNavigate } from 'react-router';
+import { useNavigate } from 'react-router';
 const cm = classnames.bind(styles);
 
 const TripInfo = () => {

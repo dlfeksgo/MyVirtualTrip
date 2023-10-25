@@ -1,0 +1,14 @@
+.wrapper {
+	overflow: hidden;
+	display: flex;
+	flex-direction: column;
+}
+
+.add {
+	background: #f4f8ff;
+	text-align: center;
+	padding: 12px 0;
+	border-radius: 8px;
+	font-size: 36px;
+	color: #316de6;
+}
