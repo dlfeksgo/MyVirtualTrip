@@ -27,7 +27,7 @@ p {
 	color: #878787;
 }
 
-button {
+.edit {
 	width: 48px;
 	height: 48px;
 	border: none;
@@ -36,6 +36,6 @@ button {
 	cursor: pointer;
 }
 
-button:hover {
+.edit:hover {
 	color: #25252550;
 }

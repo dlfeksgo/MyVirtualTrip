@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
-import { useNavigate } from 'react-router';
+import { useLocation, useNavigate } from 'react-router';
 import styles from './TripInfoForm.module.css';
 import classnames from 'classnames/bind';
 import MyHeader from '../../UI/MyHeader/MyHeader';
@@ -8,13 +8,18 @@ import MyButton from '../../UI/MyButton/MyButton';
 
 const cm = classnames.bind(styles);
 
-const TripInfoForm = () => {
-	console.log('TripInfoForm');
+const TripInfoForm = ({ isEdit }) => {
+	// console.log('TripInfoForm');
 	const [info, setInfo] = useState({
 		title: '',
 		date: '',
 		member: '',
 	});
+	const { state } = useLocation();
+	useEffect(() => {
+		isEdit && setInfo(state);
+	}, []);
+
 	const navigate = useNavigate();
 	const handleChange = (e) => {
 		setInfo((prev) => ({
@@ -24,12 +29,13 @@ const TripInfoForm = () => {
 	};
 
 	const handleSubmit = () => {
-		navigate('/', { state: info });
+		localStorage.setItem('tripInfo', JSON.stringify(info));
+		navigate('/');
 	};
 	return (
 		<>
 			<MyHeader value={'일정 등록'} />
-			<form action="submit">
+			<form>
 				<label htmlFor="title">제목</label>
 				<input
 					type="text"
@@ -57,12 +63,7 @@ const TripInfoForm = () => {
 						type={'default'}
 						onClick={() => navigate(-1)}
 					/>
-					<MyButton
-						value={'등록'}
-						type={'confirm'}
-						submit={true}
-						onClick={handleSubmit}
-					/>
+					<MyButton value={'등록'} type={'confirm'} onClick={handleSubmit} />
 				</div>
 			</form>
 		</>

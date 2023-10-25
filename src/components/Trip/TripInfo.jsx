@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import MyButton from '../UI/MyButton/MyButton';
 import styles from './TripInfo.module.css';
 import { AiOutlineEdit } from 'react-icons/ai';
@@ -9,19 +9,19 @@ const cm = classnames.bind(styles);
 const TripInfo = () => {
 	console.log('TripInfo');
 	const navigate = useNavigate();
-	const { state } = useLocation();
+	const state = JSON.parse(localStorage.getItem('tripInfo'));
 
 	if (state) {
 		return (
-			<div
-				className={cm('wrapper', 'active')}
-				onClick={() => navigate('/info/edit')}
-			>
+			<div className={cm('wrapper', 'active')}>
 				<div className={cm('content')}>
 					<h3>{state.title}</h3>
 					<p>{state.date}</p>
 				</div>
-				<button>
+				<button
+					className={cm('edit')}
+					onClick={() => navigate('/info/edit', { state })}
+				>
 					<AiOutlineEdit />
 				</button>
 			</div>
