@@ -1,0 +1,41 @@
+.wrapper.default {
+	display: flex;
+	flex-direction: column;
+	border-radius: 8px;
+	background: white;
+	justify-content: center;
+	align-items: center;
+	border: 2px dashed #d6d9df;
+	padding: 24px 0;
+}
+
+.wrapper.active {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	border-radius: 8px;
+	background: #f9f9f9;
+	padding: 0 24px;
+}
+
+.wrapper h3 {
+	font-size: 24px;
+}
+
+p {
+	margin: 0 0 12px 0;
+	color: #878787;
+}
+
+button {
+	width: 48px;
+	height: 48px;
+	border: none;
+	background: none;
+	font-size: 36px;
+	cursor: pointer;
+}
+
+button:hover {
+	color: #25252550;
+}

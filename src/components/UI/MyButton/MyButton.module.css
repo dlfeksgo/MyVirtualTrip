@@ -1,0 +1,24 @@
+.default {
+	background: #f1f1f1;
+	color: #7b7b7b;
+}
+
+.confirm {
+	background: #eff4ff;
+	color: #3779ff;
+}
+
+.warning {
+	background: #fff5f5;
+	color: #ff6f66;
+}
+
+.btn_custom {
+	outline: none;
+	border: none;
+	padding: 12px 24px;
+	font-size: 16px;
+	border-radius: 8px;
+	cursor: pointer;
+	height: 48px;
+}

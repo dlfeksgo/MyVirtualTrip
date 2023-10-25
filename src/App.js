@@ -1,7 +1,14 @@
-import './App.css';
+import CategoryList from './components/Category/CategoryList';
+import Header from './components/Header/Header';
+import TripInfo from './components/Trip/TripInfo';
 
 function App() {
-	return <></>;
+	return (
+		<>
+			<Header />
+			<TripInfo />
+		</>
+	);
 }
 
 export default App;
