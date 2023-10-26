@@ -1,0 +1,15 @@
+.wrapper {
+	display: flex;
+	gap: 8px;
+}
+
+.wrapper input {
+	width: 100%;
+	border: 1px solid rgb(190, 190, 190);
+	border-radius: 8px;
+	padding-left: 12px;
+
+	&:focus {
+		outline: none;
+	}
+}
