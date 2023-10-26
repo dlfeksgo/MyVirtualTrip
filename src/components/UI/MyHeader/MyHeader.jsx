@@ -6,9 +6,9 @@ const cm = classnames.bind(styles);
 const MyHeader = ({ value, leftChild, rightChild }) => {
 	return (
 		<div className={cm('wrapper')}>
-			{leftChild ? leftChild : <div></div>}
+			<div>{leftChild}</div>
 			<h1>{value}</h1>
-			{rightChild ? rightChild : <div></div>}
+			<div>{rightChild}</div>
 		</div>
 	);
 };

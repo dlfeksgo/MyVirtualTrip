@@ -1,5 +1,15 @@
 .wrapper {
 	display: flex;
 	justify-content: space-between;
-	align-content: center;
+	align-items: center;
+	margin-top: 24px;
+}
+
+h1 {
+	text-align: center;
+	width: 60%;
+}
+
+.wrapper div {
+	width: 20%;
 }

@@ -1,3 +1,7 @@
 .wrapper {
 	padding: 12px;
 }
+
+.wrapper h1 {
+	text-align: left;
+}

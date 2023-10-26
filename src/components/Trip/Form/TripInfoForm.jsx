@@ -35,7 +35,7 @@ const TripInfoForm = ({ isEdit }) => {
 	return (
 		<>
 			<MyHeader value={'일정 등록'} />
-			<form>
+			<form className={cm('info_form')}>
 				<label htmlFor="title">제목</label>
 				<input
 					type="text"
