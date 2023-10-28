@@ -11,7 +11,7 @@ const CategoryList = () => {
 	const dispatch = useDispatch();
 	const categorys = useSelector((state) => state.category);
 
-	const nextId = useRef(0);
+	const nextId = useRef(1);
 	const handleCreate = () => {
 		const name = prompt('카테고리 이름을 입력해주세요.');
 		if (name === null || name.length < 2) {

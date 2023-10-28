@@ -17,6 +17,7 @@ const selectItemsByCategory = createSelector(
 );
 
 const CheckList = () => {
+	console.log('CheckList');
 	const { name } = useParams();
 	const navigate = useNavigate();
 	const [items] = useSelector((state) => selectItemsByCategory(state, name));
@@ -39,7 +40,7 @@ const CheckList = () => {
 						<CheckListItem key={item.id} item={item} />
 					))}
 			</ul>
-			<ItemForm />
+			<ItemForm category={name} />
 		</div>
 	);
 };

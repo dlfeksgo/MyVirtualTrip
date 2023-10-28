@@ -1,23 +1,40 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { BsCheck } from 'react-icons/bs';
+import { AiFillDelete } from 'react-icons/ai';
 import styles from './CheckListItem.module.css';
 import classnames from 'classnames/bind';
+import { useDispatch } from 'react-redux';
+import { deleteItem, updateItem } from '../../../slice/category';
+import { useParams } from 'react-router';
 const cm = classnames.bind(styles);
 
 const CheckListItem = ({ item }) => {
-	const [toggle, setToggle] = useState(false);
-
+	console.log('CheckListItem');
+	const { name } = useParams();
+	const dispatch = useDispatch();
 	const handleChange = (e) => {
-		setToggle(!toggle);
+		dispatch(updateItem({ name, id: item.id }));
 	};
+
+	const handleDelete = () => {
+		dispatch(deleteItem({ name, id: item.id }));
+	};
+
 	return (
-		<li className={cm('wrapper')} onClick={handleChange}>
-			<div className={cm('circle', `${toggle && 'checked'}`)}>
-				{toggle && <BsCheck />}
+		<li className={cm('wrapper')}>
+			<div className={cm('content')} name="check" onClick={handleChange}>
+				<div className={cm('circle', `${item.isCompleted && 'checked'}`)}>
+					{item.isCompleted && <BsCheck />}
+				</div>
+				<span className={cm('text', `${item.isCompleted && 'completed'}`)}>
+					{item.content}
+				</span>
 			</div>
-			<span className={cm('text', `${toggle && 'completed'}`)}>
-				{item.content}
-			</span>
+			<div>
+				<button className={cm('btn_delete')} onClick={handleDelete}>
+					<AiFillDelete />
+				</button>
+			</div>
 		</li>
 	);
 };

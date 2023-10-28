@@ -1,6 +1,8 @@
 .wrapper {
 	display: flex;
+	justify-content: space-between;
 	align-items: center;
+	margin-bottom: 16px;
 }
 
 .circle {
@@ -28,4 +30,26 @@
 .text.completed {
 	text-decoration: line-through;
 	color: rgb(185, 185, 185);
+}
+
+.content {
+	display: flex;
+	align-items: center;
+	cursor: pointer;
+}
+
+.btn_edit,
+.btn_delete {
+	font-size: 24px;
+	color: #25252550;
+	border: none;
+	background: transparent;
+	transition: all 0.2s ease-in;
+	cursor: pointer;
+}
+
+.btn_edit:hover,
+.btn_delete:hover {
+	color: #252525;
+	transform: scale(1.2);
 }
