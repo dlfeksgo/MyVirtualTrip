@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { BsCheck } from 'react-icons/bs';
 import { AiFillDelete } from 'react-icons/ai';
 import styles from './CheckListItem.module.css';
@@ -12,6 +12,7 @@ const CheckListItem = ({ item }) => {
 	console.log('CheckListItem');
 	const { name } = useParams();
 	const dispatch = useDispatch();
+
 	const handleChange = (e) => {
 		dispatch(updateItem({ name, id: item.id }));
 	};
@@ -39,4 +40,4 @@ const CheckListItem = ({ item }) => {
 	);
 };
 
-export default CheckListItem;
+export default memo(CheckListItem);

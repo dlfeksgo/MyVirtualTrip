@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ItemForm from './Form/ItemForm';
 import MyHeader from '../UI/MyHeader/MyHeader';
 import MyButton from '../UI/MyButton/MyButton';
@@ -13,15 +13,18 @@ const cm = classnames.bind(styles);
 const selectCategorys = (state) => state.category;
 const selectItemsByCategory = createSelector(
 	[selectCategorys, (state, name) => name],
-	(categorys, name) => categorys.filter((category) => category.name === name)
+	(categorys, name) => {
+		console.log('Selector');
+		const category = categorys.find((category) => category.name === name);
+		return category.itemList;
+	}
 );
 
 const CheckList = () => {
 	console.log('CheckList');
 	const { name } = useParams();
 	const navigate = useNavigate();
-	const [items] = useSelector((state) => selectItemsByCategory(state, name));
-
+	const items = useSelector((state) => selectItemsByCategory(state, name));
 	return (
 		<div className={cm('wrapper')}>
 			<MyHeader
@@ -36,9 +39,7 @@ const CheckList = () => {
 			/>
 			<ul className={cm('list')}>
 				{items &&
-					items.itemList.map((item) => (
-						<CheckListItem key={item.id} item={item} />
-					))}
+					items.map((item) => <CheckListItem key={item.id} item={item} />)}
 			</ul>
 			<ItemForm category={name} />
 		</div>

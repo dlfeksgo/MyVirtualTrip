@@ -3,20 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 export const categorySlice = createSlice({
 	name: 'category',
-	initialState: [
-		{
-			id: 0,
-			name: '테스트',
-			title: '테스트 제목',
-			itemList: [
-				{
-					id: 0,
-					content: '테스트 내용',
-					isCompleted: true,
-				},
-			],
-		},
-	],
+	initialState: [],
 	reducers: {
 		createCategory: (state, action) => {
 			state.push(action.payload);
@@ -45,3 +32,16 @@ export const categorySlice = createSlice({
 
 export const { createCategory, createItem, updateItem, deleteItem } =
 	categorySlice.actions;
+
+// {
+// 	id: 0,
+// 	name: '테스트',
+// 	title: '테스트 제목',
+// 	itemList: [
+// 		{
+// 			id: 0,
+// 			content: '테스트 내용',
+// 			isCompleted: true,
+// 		},
+// 	],
+// },
