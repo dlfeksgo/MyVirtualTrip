@@ -6,7 +6,10 @@ export const categorySlice = createSlice({
 	initialState: [],
 	reducers: {
 		createCategory: (state, action) => {
-			state.push(action.payload);
+			state.push({
+				...action.payload,
+				id: uuidv4(),
+			});
 		},
 		createItem: (state, action) => {
 			const category = state.find((v) => v.name === action.payload.category);
