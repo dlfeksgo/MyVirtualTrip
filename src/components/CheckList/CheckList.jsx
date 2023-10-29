@@ -12,12 +12,22 @@ import ItemFilter from './Filter/ItemFilter';
 const cm = classnames.bind(styles);
 
 const selectCategorys = (state) => state.category;
+const selectFilter = (state) => state.filter.status;
 const selectItemsByCategory = createSelector(
-	[selectCategorys, (state, name) => name],
-	(categorys, name) => {
+	[selectCategorys, (state, name) => name, selectFilter],
+	(categorys, name, status) => {
 		console.log('Selector');
-		const category = categorys.find((category) => category.name === name);
-		return category.itemList;
+		const { itemList } = categorys.find((category) => category.name === name);
+		switch (status) {
+			case '전체':
+				return itemList;
+			case '완료':
+				return itemList.filter((item) => item.isCompleted);
+			case '미완료':
+				return itemList.filter((item) => !item.isCompleted);
+			default:
+				return itemList;
+		}
 	}
 );
 
