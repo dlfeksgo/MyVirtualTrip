@@ -8,6 +8,7 @@ import { createSelector } from '@reduxjs/toolkit';
 import CheckListItem from './CheckListItem/CheckListItem';
 import styles from './CheckList.module.css';
 import classnames from 'classnames/bind';
+import ItemFilter from './Filter/ItemFilter';
 const cm = classnames.bind(styles);
 
 const selectCategorys = (state) => state.category;
@@ -37,6 +38,7 @@ const CheckList = () => {
 					/>
 				}
 			/>
+			<ItemFilter />
 			<ul className={cm('list')}>
 				{items &&
 					items.map((item) => <CheckListItem key={item.id} item={item} />)}
