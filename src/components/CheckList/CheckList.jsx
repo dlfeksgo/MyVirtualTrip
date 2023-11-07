@@ -11,6 +11,8 @@ import classnames from 'classnames/bind';
 import ItemFilter from './Filter/ItemFilter';
 import { selectCategorys } from '../../slice/category';
 import { selectFilter } from '../../slice/filter';
+import { useQuery } from '@tanstack/react-query';
+import { getCategorys, getItems } from '../../api/firebase';
 const cm = classnames.bind(styles);
 
 const selectItemsByCategory = createSelector(
@@ -38,10 +40,15 @@ const CheckList = () => {
 	console.log('CheckList');
 	const { name } = useParams();
 	const navigate = useNavigate();
-	const items = useSelector(
-		(state) => selectItemsByCategory(state, name),
-		shallowEqual
-	);
+	// const items = useSelector(
+	// 	(state) => selectItemsByCategory(state, name),
+	// 	shallowEqual
+	// );
+	const { data: items } = useQuery({
+		queryKey: ['categorys', 'items'],
+		queryFn: () => getItems(name),
+	});
+	console.log(items);
 
 	return (
 		<div className={cm('wrapper')}>
@@ -56,10 +63,10 @@ const CheckList = () => {
 				}
 			/>
 			<ItemFilter />
-			<ul className={cm('list')}>
+			{/* <ul className={cm('list')}>
 				{items &&
 					items.map((itemId) => <CheckListItem key={itemId} itemId={itemId} />)}
-			</ul>
+			</ul> */}
 			<ItemForm category={name} />
 		</div>
 	);
