@@ -23,4 +23,6 @@ const filterSlice = createSlice({
 });
 export default filterSlice;
 
+export const selectFilter = (state) => state.filter.status;
+
 export const { statusFilterChanged } = filterSlice.actions;
