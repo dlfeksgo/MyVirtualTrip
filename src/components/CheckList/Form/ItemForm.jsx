@@ -1,14 +1,12 @@
-import React, { memo, useState } from 'react';
+import React, { memo, useRef, useState } from 'react';
 import MyButton from '../../UI/MyButton/MyButton';
 import styles from './ItemForm.module.css';
 import classnames from 'classnames/bind';
-import { useDispatch } from 'react-redux';
-import { createItem } from '../../../slice/category';
-import { addNewItem } from '../../../api/firebase';
 const cm = classnames.bind(styles);
 
-const ItemForm = ({ category }) => {
-	const dispatch = useDispatch();
+const ItemForm = ({ category, addItem }) => {
+	// const dispatch = useDispatch();
+	// const { addItem } = useCategoryItemList();
 	const [text, setText] = useState('');
 	const handleChange = (e) => {
 		setText(e.target.value);
@@ -20,7 +18,7 @@ const ItemForm = ({ category }) => {
 			isCompleted: false,
 		};
 		// dispatch(createItem({ category, newData }));
-		addNewItem(newData);
+		addItem.mutate(newData);
 		setText('');
 	};
 

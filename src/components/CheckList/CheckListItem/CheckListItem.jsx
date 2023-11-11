@@ -1,62 +1,42 @@
-import React, { memo, useMemo } from 'react';
+import React from 'react';
 import { BsCheck } from 'react-icons/bs';
 import { AiFillDelete } from 'react-icons/ai';
 import styles from './CheckListItem.module.css';
 import classnames from 'classnames/bind';
-import { shallowEqual, useDispatch, useSelector } from 'react-redux';
-import {
-	deleteItem,
-	selectCategorys,
-	updateItem,
-} from '../../../slice/category';
 import { useParams } from 'react-router';
-import { createSelector } from '@reduxjs/toolkit';
+import { useItemById } from '../../../hooks/useCategory';
 const cm = classnames.bind(styles);
 
-const makeSelectByItemId = () => {
-	const selectByItemId = createSelector(
-		[selectCategorys, (state, name) => name, (state, name, itemId) => itemId],
-		(categorys, name, itemId) => {
-			console.log('first');
-			const { itemList } = categorys.find((category) => category.name === name);
-			return itemList.find((item) => item.id === itemId);
-		}
-	);
-	return selectByItemId;
-};
-
-// const selectByItemId = createSelector(
-// 	[selectCategorys, (state, name, itemId) => ({ name, itemId })],
-// 	(categorys, { name, itemId }) => {
-// 		console.log('first');
-// 		const { itemList } = categorys.find((category) => category.name === name);
-// 		return itemList.find((item) => item.id === itemId);
-// 	}
-// );
-
-const CheckListItem = ({ itemId }) => {
+const CheckListItem = ({ item }) => {
 	console.log('CheckListItem');
 	const { name } = useParams();
-	const dispatch = useDispatch();
-	const selectByItemId = useMemo(makeSelectByItemId, []);
-	const item = useSelector((state) => selectByItemId(state, name, itemId));
+
+	const {
+		itemQuery: { data, isLoading },
+		updateItem,
+		deleteItem,
+	} = useItemById({ name, id: item.id });
 
 	const handleChange = (e) => {
-		dispatch(updateItem({ name, id: itemId }));
+		updateItem.mutate({ name, ...data });
 	};
 
 	const handleDelete = () => {
-		dispatch(deleteItem({ name, id: itemId }));
+		deleteItem.mutate({ name, ...data });
 	};
+
+	if (isLoading) {
+		return <p>Loading...</p>;
+	}
 
 	return (
 		<li className={cm('wrapper')}>
 			<div className={cm('content')} name="check" onClick={handleChange}>
-				<div className={cm('circle', `${item.isCompleted && 'checked'}`)}>
-					{item.isCompleted && <BsCheck />}
+				<div className={cm('circle', `${data.isCompleted && 'checked'}`)}>
+					{data.isCompleted && <BsCheck />}
 				</div>
-				<span className={cm('text', `${item.isCompleted && 'completed'}`)}>
-					{item.content}
+				<span className={cm('text', `${data.isCompleted && 'completed'}`)}>
+					{data.content}
 				</span>
 			</div>
 			<div>

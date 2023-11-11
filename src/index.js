@@ -6,6 +6,7 @@ import { router } from './route';
 import { Provider } from 'react-redux';
 import { store } from './store/configureStore';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 const queryClient = new QueryClient();
 
@@ -14,6 +15,7 @@ root.render(
 	<Provider store={store}>
 		<QueryClientProvider client={queryClient}>
 			<RouterProvider router={router} />
+			<ReactQueryDevtools initialIsOpen={true} />
 		</QueryClientProvider>
 	</Provider>
 );

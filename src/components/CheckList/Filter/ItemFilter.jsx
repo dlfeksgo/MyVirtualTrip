@@ -5,13 +5,16 @@ import styles from './ItemFilter.module.css';
 import classnames from 'classnames/bind';
 const cm = classnames.bind(styles);
 
-const ItemFilter = () => {
+const ItemFilter = ({ refetch }) => {
 	console.log('Filter Render');
 	const activeFilter = useSelector((state) => state.filter.status);
 	const dispatch = useDispatch();
 	const renderedFilters = Object.keys(StatusFilters).map((key) => {
 		const value = StatusFilters[key];
-		const handleFilter = () => dispatch(statusFilterChanged(value));
+		const handleFilter = () => {
+			dispatch(statusFilterChanged(value));
+			refetch().then(() => console.log('필터 변경 refetch!'));
+		};
 		const active = activeFilter === value ? true : false;
 		return (
 			<li key={key}>

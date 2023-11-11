@@ -1,37 +1,48 @@
-import React, { useState } from 'react';
+import React from 'react';
 import ItemForm from './Form/ItemForm';
 import MyHeader from '../UI/MyHeader/MyHeader';
 import MyButton from '../UI/MyButton/MyButton';
 import { useNavigate, useParams } from 'react-router';
-import { shallowEqual, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { createSelector } from '@reduxjs/toolkit';
 import CheckListItem from './CheckListItem/CheckListItem';
 import styles from './CheckList.module.css';
 import classnames from 'classnames/bind';
 import ItemFilter from './Filter/ItemFilter';
-import { selectCategorys } from '../../slice/category';
 import { selectFilter } from '../../slice/filter';
-import { useQuery } from '@tanstack/react-query';
-import { getCategorys, getItems } from '../../api/firebase';
+import { useCategoryItemList } from '../../hooks/useCategory';
 const cm = classnames.bind(styles);
 
+// const selectItemsByCategory = createSelector(
+// 	[selectFilter, (state, items) => items],
+// 	(status, items) => {
+// 		switch (status) {
+// 			case '전체':
+// 				return items?.map((item) => item.id);
+// 			case '완료':
+// 				return items?.filter((item) => item.isCompleted).map((item) => item.id);
+// 			case '미완료':
+// 				return items
+// 					?.filter((item) => !item.isCompleted)
+// 					.map((item) => item.id);
+// 			default:
+// 				return items?.map((item) => item.id);
+// 		}
+// 	}
+// );
 const selectItemsByCategory = createSelector(
-	[selectCategorys, (state, name) => name, selectFilter],
-	(categorys, name, status) => {
-		const { itemList } = categorys.find((category) => category.name === name);
+	[selectFilter, (state, items) => items],
+	(status, items) => {
 		switch (status) {
 			case '전체':
-				return itemList.map((item) => item.id);
+				return items;
 			case '완료':
-				return itemList
-					.filter((item) => item.isCompleted)
-					.map((item) => item.id);
+				return items?.filter((item) => item.isCompleted);
 			case '미완료':
-				return itemList
-					.filter((item) => !item.isCompleted)
-					.map((item) => item.id);
+				return items?.filter((item) => !item.isCompleted);
+
 			default:
-				return itemList.map((item) => item.id);
+				return items;
 		}
 	}
 );
@@ -40,15 +51,16 @@ const CheckList = () => {
 	console.log('CheckList');
 	const { name } = useParams();
 	const navigate = useNavigate();
-	// const items = useSelector(
-	// 	(state) => selectItemsByCategory(state, name),
-	// 	shallowEqual
-	// );
-	const { data: items } = useQuery({
-		queryKey: ['categorys', 'items'],
-		queryFn: () => getItems(name),
-	});
-	console.log(items);
+	const {
+		itemListQuery: { data: itemList, isLoading, refetch },
+		addItem,
+	} = useCategoryItemList(name);
+
+	const items = useSelector((state) => selectItemsByCategory(state, itemList));
+
+	if (isLoading) {
+		return <p>Loading...</p>;
+	}
 
 	return (
 		<div className={cm('wrapper')}>
@@ -62,12 +74,12 @@ const CheckList = () => {
 					/>
 				}
 			/>
-			<ItemFilter />
-			{/* <ul className={cm('list')}>
+			<ItemFilter refetch={refetch} />
+			<ul className={cm('list')}>
 				{items &&
-					items.map((itemId) => <CheckListItem key={itemId} itemId={itemId} />)}
-			</ul> */}
-			<ItemForm category={name} />
+					items.map((item) => <CheckListItem key={item.id} item={item} />)}
+			</ul>
+			<ItemForm category={name} addItem={addItem} />
 		</div>
 	);
 };
