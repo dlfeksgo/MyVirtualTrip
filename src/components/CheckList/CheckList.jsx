@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import ItemForm from './Form/ItemForm';
 import MyHeader from '../UI/MyHeader/MyHeader';
 import MyButton from '../UI/MyButton/MyButton';
@@ -11,6 +11,7 @@ import classnames from 'classnames/bind';
 import ItemFilter from './Filter/ItemFilter';
 import { selectFilter } from '../../slice/filter';
 import { useCategoryItemList } from '../../hooks/useCategory';
+import { ThreeDots } from 'react-loader-spinner';
 const cm = classnames.bind(styles);
 
 const selectItemsByCategory = createSelector(
@@ -42,7 +43,18 @@ const CheckList = () => {
 	const items = useSelector((state) => selectItemsByCategory(state, itemList));
 
 	if (isLoading) {
-		return <p>Loading...</p>;
+		return (
+			<ThreeDots
+				height="80"
+				width="80"
+				radius="9"
+				color="#9fa2b8"
+				ariaLabel="three-dots-loading"
+				wrapperStyle={{ justifyContent: 'center', margin: 'auto' }}
+				wrapperClassName=""
+				visible={true}
+			/>
+		);
 	}
 
 	return (

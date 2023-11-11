@@ -26,9 +26,19 @@ const CheckListItem = ({ item }) => {
 	};
 
 	if (isLoading) {
-		return <p>Loading...</p>;
+		return (
+			<ThreeDots
+				height="80"
+				width="80"
+				radius="9"
+				color="#9fa2b8"
+				ariaLabel="three-dots-loading"
+				wrapperStyle={{ justifyContent: 'center', margin: 'auto' }}
+				wrapperClassName=""
+				visible={true}
+			/>
+		);
 	}
-
 	return (
 		<li className={cm('wrapper')}>
 			<div className={cm('content')} name="check" onClick={handleChange}>
