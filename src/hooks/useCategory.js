@@ -6,7 +6,7 @@ import {
 	getItems,
 	getItem,
 	updateItemStatus,
-	deleteItem,
+	deleteItem as fetchDeleteItem,
 } from '../api/firebase';
 
 export const useCategory = () => {
@@ -62,11 +62,26 @@ export const useItemById = (data) => {
 	});
 
 	const deleteItem = useMutation({
-		mutationFn: (data) => deleteItem(data),
-		onSuccess: () => {
-			queryClient.setQueryData(['categorys', data.name], (oldData) =>
-				oldData.filter((v) => v.id !== data.id)
+		mutationFn: (data) => fetchDeleteItem(data),
+		// onSuccess: () => {
+		// 	queryClient.setQueryData(['categorys', data.name], (oldData) =>
+		// 		oldData.filter((v) => v.id !== data.id)
+		// 	);
+		// },
+		onMutate: async (variables) => {
+			await queryClient.cancelQueries({
+				queryKey: ['categorys', variables.name],
+			});
+			const oldData = queryClient.getQueryData(['categorys', variables.name]);
+			queryClient.setQueryData(['categorys', variables.name], () =>
+				oldData.filter((v) => v.id !== variables.id)
 			);
+			return { oldData };
+		},
+		onError: (err, newData, context) => {
+			queryClient.setQueryData(['categorys', newData.name], {
+				...context.oldData,
+			});
 		},
 	});
 
