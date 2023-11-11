@@ -1,4 +1,4 @@
-import React, { memo, useRef, useState } from 'react';
+import React, { memo, useState } from 'react';
 import MyButton from '../../UI/MyButton/MyButton';
 import styles from './ItemForm.module.css';
 import classnames from 'classnames/bind';
