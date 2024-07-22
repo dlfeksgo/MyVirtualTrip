@@ -37,8 +37,8 @@ export const useCategoryItemList = (name) => {
 		queryKey: ['categorys', name],
 		queryFn: () => getItems(name),
 		initialData: () => {
-			const result = queryClient.getQueryData(['categorys']).find((v) => v.name === name);
-			return result ? result.itemList : undefined;
+			const result = queryClient.getQueryData(['categorys']);
+			return result ? result.find((v) => v.name === name).itemList : undefined;
 		},
 		staleTime: Infinity,
 		refetchOnWindowFocus: false,
@@ -65,7 +65,8 @@ export const useItemById = (data) => {
 		queryFn: () => getItem(data),
 		initialData: () => {
 			const items = queryClient.getQueryData(['categorys', data.name]);
-			return items.filter((item) => item.id === data.id);
+			const item = items.find((item) => item.id === data.id) ?? undefined;
+			return item;
 		},
 		staleTime: Infinity,
 		refetchOnWindowFocus: false,
