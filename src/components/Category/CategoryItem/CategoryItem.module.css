@@ -14,6 +14,7 @@
 	color: #252525;
 	padding: 2px 16px;
 	margin-bottom: 12px;
+	overflow: hidden;
 }
 
 .item p {
