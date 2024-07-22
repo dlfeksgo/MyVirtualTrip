@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/MyVirtualTrip/static/css/main.7349a7c8.css",
+    "main.js": "/MyVirtualTrip/static/js/main.708e5488.js",
+    "index.html": "/MyVirtualTrip/index.html",
+    "main.7349a7c8.css.map": "/MyVirtualTrip/static/css/main.7349a7c8.css.map",
+    "main.708e5488.js.map": "/MyVirtualTrip/static/js/main.708e5488.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.7349a7c8.css",
+    "static/js/main.708e5488.js"
+  ]
+}
