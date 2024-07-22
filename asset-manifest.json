@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/MyVirtualTrip/static/css/main.7349a7c8.css",
-    "main.js": "/MyVirtualTrip/static/js/main.708e5488.js",
+    "main.css": "/MyVirtualTrip/static/css/main.c752bfb2.css",
+    "main.js": "/MyVirtualTrip/static/js/main.4e09c9c7.js",
     "index.html": "/MyVirtualTrip/index.html",
-    "main.7349a7c8.css.map": "/MyVirtualTrip/static/css/main.7349a7c8.css.map",
-    "main.708e5488.js.map": "/MyVirtualTrip/static/js/main.708e5488.js.map"
+    "main.c752bfb2.css.map": "/MyVirtualTrip/static/css/main.c752bfb2.css.map",
+    "main.4e09c9c7.js.map": "/MyVirtualTrip/static/js/main.4e09c9c7.js.map"
   },
   "entrypoints": [
-    "static/css/main.7349a7c8.css",
-    "static/js/main.708e5488.js"
+    "static/css/main.c752bfb2.css",
+    "static/js/main.4e09c9c7.js"
   ]
 }
