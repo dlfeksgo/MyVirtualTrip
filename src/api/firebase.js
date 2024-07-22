@@ -1,5 +1,5 @@
 import { initializeApp } from 'firebase/app';
-import { getDatabase, ref, set, get, remove } from 'firebase/database';
+import { get, getDatabase, ref, remove, set } from 'firebase/database';
 import { v4 as uuid } from 'uuid';
 
 const firebaseConfig = {
@@ -10,7 +10,7 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-const db = getDatabase();
+const db = getDatabase(app);
 
 export const createCategory = async ({ name, title }) => {
 	const id = uuid();
@@ -21,62 +21,59 @@ export const createCategory = async ({ name, title }) => {
 	});
 };
 
-export const getCategorys = async () => {
-	return get(ref(db, 'categorys')).then((snapshot) => {
-		if (snapshot.exists()) {
-			const origin = Object.values(snapshot.val());
-			return origin.map((v) =>
-				v.itemList
-					? { ...v, itemList: Array.from(Object.values(v.itemList)) }
-					: v
-			);
-		}
-		return [];
-	});
+export const deleteCategory = async (name) => {
+	remove(ref(db, `categorys/${name}`));
 };
 
-export const getItems = async (name) => {
-	return get(ref(db, `categorys/${name}/itemList`)).then((snapshot) => {
+export const getCategorys = async () =>
+	get(ref(db, 'categorys'))
+		.then((snapshot) => {
+			if (snapshot.exists()) {
+				const origin = Object.values(snapshot.val());
+				return origin.map((v) => (v.itemList ? { ...v, itemList: Array.from(Object.values(v.itemList)) } : v));
+			}
+			return [];
+		})
+		.catch((err) => console.log(err));
+
+export const getItems = async (name) =>
+	get(ref(db, `categorys/${name}/itemList`)).then((snapshot) => {
 		if (snapshot.exists()) {
 			return Object.values(snapshot.val());
 		}
 		return [];
 	});
-};
 
 export const addNewItem = async (item) => {
 	const id = new Date().getTime();
-	set(ref(db, `categorys/${item.name}/itemList/${id}`), {
-		id,
-		content: item.content,
-		isCompleted: item.isCompleted,
-	});
-
-	return {
+	const value = {
 		id,
 		content: item.content,
 		isCompleted: item.isCompleted,
 	};
+	set(ref(db, `categorys/${item.name}/itemList/${id}`), value).then(() => console.log('성공'));
+	return get(ref(db, `categorys/${item.name}/itemList/${id}`)).then((snapshot) => {
+		if (snapshot.exists()) {
+			return snapshot.val();
+		}
+		return;
+	});
 };
 
-export const updateItemStatus = async (data) => {
-	return set(ref(db, `categorys/${data.name}/itemList/${data.id}`), {
+export const updateItemStatus = async (data) =>
+	set(ref(db, `categorys/${data.name}/itemList/${data.id}`), {
 		...data,
 		isCompleted: !data.isCompleted,
 	});
-};
 
 export const deleteItem = async (data) => {
 	remove(ref(db, `categorys/${data.name}/itemList/${data.id}`));
 };
 
-export const getItem = async (data) => {
-	return get(ref(db, `categorys/${data.name}/itemList/${data.id}`)).then(
-		(snapshot) => {
-			if (snapshot.exists()) {
-				return snapshot.val();
-			}
-			return;
+export const getItem = async (data) =>
+	get(ref(db, `categorys/${data.name}/itemList/${data.id}`)).then((snapshot) => {
+		if (snapshot.exists()) {
+			return snapshot.val();
 		}
-	);
-};
+		return;
+	});
