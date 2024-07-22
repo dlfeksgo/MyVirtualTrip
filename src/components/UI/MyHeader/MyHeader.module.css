@@ -9,3 +9,15 @@ h1 {
 	text-align: center;
 	width: 60%;
 }
+
+.wrapper div {
+	width: 20%;
+}
+
+.left {
+	text-align: left;
+}
+
+.right {
+	text-align: right;
+}
